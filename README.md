@@ -12,7 +12,7 @@
 
 ![Ultra-Short URL Shortener](screenshot.png)
 
-### 🌐 **LIVE DEMO:** [https://url-shortener.davidyen1124.workers.dev/](https://url-shortener.davidyen1124.workers.dev/)
+### 🌐 **LIVE DEMO:** [https://ultra-short.davidyen1124.workers.dev/](https://ultra-short.davidyen1124.workers.dev/)
 
 ---
 
@@ -102,7 +102,7 @@ npm run deploy
 **Shorten a URL (Revolutionary Process):**
 
 ```bash
-curl -X POST https://url-shortener.davidyen1124.workers.dev/api/shorten \
+curl -X POST https://ultra-short.davidyen1124.workers.dev/api/shorten \
   -H "Content-Type: application/json" \
   -d '{"url": "https://your-extremely-long-url-that-nobody-wants-to-type.com"}'
 ```
@@ -110,7 +110,7 @@ curl -X POST https://url-shortener.davidyen1124.workers.dev/api/shorten \
 **Access Your Short URL (Mind = Blown):**
 
 ```
-https://url-shortener.davidyen1124.workers.dev/abc123xyz
+https://ultra-short.davidyen1124.workers.dev/abc123xyz
 ```
 
 ---
