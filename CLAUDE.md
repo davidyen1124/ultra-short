@@ -23,13 +23,14 @@ This is a Cloudflare Workers-based URL shortener service built with the Hono fra
 ### Core Components
 
 - **`src/index.ts`**: Main Worker request handler built with Hono, featuring:
+
   - `POST /api/shorten`: Creates short URLs with rate limiting and validation
   - `GET /:code`: Redirects to original URLs with 307 status and tracks clicks asynchronously (validates ULID format)
-  - `GET /status`: Health check endpoint that tests KV availability
   - Global CORS middleware for cross-origin requests
   - Global error handling with structured responses
 
 - **`src/types.ts`**: TypeScript type definitions for:
+
   - `Env`: Cloudflare Worker environment bindings
   - `UrlMapping`: URL mapping data structure
   - `UrlMeta`: Click tracking metadata structure
@@ -66,4 +67,3 @@ This is a Cloudflare Workers-based URL shortener service built with the Hono fra
 - CORS support for cross-origin requests
 - Error handling with appropriate HTTP status codes
 - Static file serving from public directory
-- Health monitoring via /status endpoint

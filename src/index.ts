@@ -21,29 +21,6 @@ app.onError((err, c) => {
 	return c.json({ error: 'Internal Server Error' }, 500);
 });
 
-app.get('/status', async (c) => {
-	try {
-		await c.env.LINKS.list({ limit: 1 });
-
-		return c.json(
-			{
-				status: 'ok',
-				timestamp: new Date().toISOString(),
-				version: '1.0.0',
-			},
-			200
-		);
-	} catch (error) {
-		return c.json(
-			{
-				status: 'error',
-				error: 'KV store unavailable',
-			},
-			503
-		);
-	}
-});
-
 app.post('/api/shorten', async (c) => {
 	try {
 		const { url } = await c.req.json<{ url: string }>();

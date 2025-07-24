@@ -151,21 +151,6 @@ describe('URL Shortener Worker', () => {
 		});
 	});
 
-	describe('GET /status', () => {
-		it('returns health check status', async () => {
-			const request = new Request('http://example.com/status');
-			const ctx = createExecutionContext();
-			const response = await app.fetch(request, env, ctx);
-			await waitOnExecutionContext(ctx);
-
-			expect(response.status).toBe(200);
-			const result = (await response.json()) as any;
-			expect(result.status).toBe('ok');
-			expect(result.timestamp).toBeTruthy();
-			expect(result.version).toBe('1.0.0');
-		});
-	});
-
 	describe('CORS handling', () => {
 		it('handles OPTIONS preflight requests', async () => {
 			const request = new Request('http://example.com/api/shorten', {
@@ -182,7 +167,7 @@ describe('URL Shortener Worker', () => {
 		});
 
 		it('includes CORS headers in API responses', async () => {
-			const request = new Request('http://example.com/status');
+			const request = new Request('http://example.com/nonexistent');
 			const ctx = createExecutionContext();
 			const response = await app.fetch(request, env, ctx);
 			await waitOnExecutionContext(ctx);
