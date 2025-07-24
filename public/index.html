@@ -3,29 +3,275 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Hello, World!</title>
-	</head>
-	<body>
-		<h1 id="heading"></h1>
-		<p>This page comes from a static asset stored at `public/index.html` as configured in `wrangler.jsonc`.</p>
-		<button id="button" type="button">Fetch a random UUID</button>
-		<output id="random" for="button"></output>
+		<title>URL {-> ULTRA-SHORT} | Tech-Punk URL Shortener</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
+			rel="stylesheet"
+		/>
 		<script>
-			fetch('/message')
-				.then((resp) => resp.text())
-				.then((text) => {
-					const h1 = document.getElementById('heading');
-					h1.textContent = text;
-				});
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							'crt-green': '#00ff88',
+							'crt-pink': '#ff0080',
+							'terminal-bg': '#070707',
+							'terminal-dark': '#001100',
+						},
+						fontFamily: {
+							mono: ['Fira Code', 'IBM Plex Mono', 'monospace'],
+						},
+						keyframes: {
+							flicker: {
+								'0%, 100%': { opacity: '1', filter: 'contrast(1)' },
+								'50%': { opacity: '0.98', filter: 'contrast(1.05)' },
+							},
+							blink: {
+								'0%, 50%': { opacity: '1' },
+								'51%, 100%': { opacity: '0' },
+							},
+							glitch: {
+								'0%': { transform: 'translate(0)' },
+								'20%': { transform: 'translate(-2px, 2px)' },
+								'40%': { transform: 'translate(-2px, -2px)' },
+								'60%': { transform: 'translate(2px, 2px)' },
+								'80%': { transform: 'translate(2px, -2px)' },
+								'100%': { transform: 'translate(0)' },
+							},
+							spinner: {
+								'0%': { content: '"| "' },
+								'25%': { content: '"/ "' },
+								'50%': { content: '"- "' },
+								'75%': { content: '"\\\\ "' },
+							},
+						},
+						animation: {
+							flicker: 'flicker 3s infinite steps(100)',
+							blink: 'blink 1s infinite',
+							glitch: 'glitch 0.3s ease-in-out',
+							spinner: 'spinner 0.8s infinite steps(4)',
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			.crt-scanlines::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-image: repeating-linear-gradient(transparent 0, transparent 2px, rgba(0, 0, 0, 0.12) 2px, rgba(0, 0, 0, 0.12) 4px);
+				opacity: 0.25;
+				pointer-events: none;
+			}
+		</style>
+	</head>
+	<body class="bg-terminal-bg text-crt-green font-mono min-h-screen overflow-x-hidden">
+		<!-- Central CRT Module -->
+		<main class="flex flex-col items-center justify-center min-h-screen px-4">
+			<!-- Hero Section -->
+			<header class="text-center mb-8">
+				<h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-wider">ULTRA-SHORT<span class="animate-blink text-crt-green">_</span></h1>
+				<p class="text-lg md:text-xl text-green-400 opacity-80">Slash the clutter, own the link.</p>
+			</header>
+			<div class="relative max-w-lg w-full">
+				<!-- CRT Frame -->
+				<div
+					class="crt-terminal relative bg-gradient-radial from-terminal-dark to-terminal-bg rounded-lg border-2 border-crt-green p-6 animate-flicker crt-scanlines"
+					style="box-shadow: 0 0 20px #00ff88 inset, 0 0 40px #00ff88"
+				>
+					<!-- Terminal Header -->
+					<div class="relative flex items-center mb-6 pb-2 border-b border-crt-green border-opacity-30">
+						<div class="flex space-x-2">
+							<div class="w-3 h-3 rounded-full bg-red-500 opacity-70"></div>
+							<div class="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></div>
+							<div class="w-3 h-3 rounded-full bg-crt-green opacity-70"></div>
+						</div>
+						<span class="absolute left-1/2 transform -translate-x-1/2 text-sm opacity-70">TERMINAL://url-shortener</span>
+					</div>
 
-			const button = document.getElementById('button');
-			button.addEventListener('click', () => {
-				fetch('/random')
-					.then((resp) => resp.text())
-					.then((text) => {
-						const random = document.getElementById('random');
-						random.textContent = text;
+					<!-- Form Container -->
+					<div class="space-y-4">
+						<div class="text-sm opacity-80 mb-2"><span class="text-crt-pink">$</span> Enter target URL:</div>
+
+						<form id="shortenForm" class="space-y-4">
+							<input
+								type="url"
+								id="urlInput"
+								placeholder="https://your-long-url.com"
+								class="w-full bg-black bg-opacity-50 border border-crt-green border-opacity-50 rounded px-3 py-2 text-crt-green placeholder-green-600 focus:outline-none focus:border-crt-green focus:bg-opacity-70 transition-all"
+								required
+							/>
+
+							<button
+								type="submit"
+								id="shortenBtn"
+								class="w-full bg-crt-green text-black font-bold py-2 px-4 rounded hover:bg-green-400 active:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-crt-green focus:ring-opacity-50"
+							>
+								SHORT IT!
+							</button>
+						</form>
+
+						<!-- Status Area -->
+						<div id="statusArea" class="mt-2 min-h-[1rem]">
+							<!-- Loading spinner will appear here -->
+						</div>
+
+						<!-- Result Area -->
+						<div id="resultArea" class="hidden space-y-2 mt-2">
+							<div class="text-sm opacity-80"><span class="text-crt-pink">></span> Your ultra-short URL:</div>
+							<input
+								type="text"
+								id="resultUrl"
+								readonly
+								class="w-full bg-black bg-opacity-50 border border-crt-green border-opacity-50 rounded px-3 py-2 text-crt-green select-all focus:outline-none focus:border-crt-green"
+							/>
+							<button
+								id="copyBtn"
+								class="w-full bg-crt-green text-black font-bold py-2 px-4 rounded hover:bg-green-400 active:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-crt-green focus:ring-opacity-50"
+							>
+								COPY
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<footer class="text-center mt-6 text-xs opacity-50">
+				<p>Powered by <span class="text-crt-pink">Cloudflare Workers</span> • Built with <span class="text-crt-green">Hono</span></p>
+			</footer>
+		</main>
+
+		<script>
+			// App state
+			const state = {
+				isLoading: false,
+				currentUrl: null,
+			};
+
+			// DOM elements
+			const form = document.getElementById('shortenForm');
+			const urlInput = document.getElementById('urlInput');
+			const shortenBtn = document.getElementById('shortenBtn');
+			const statusArea = document.getElementById('statusArea');
+			const resultArea = document.getElementById('resultArea');
+			const resultUrl = document.getElementById('resultUrl');
+			const copyBtn = document.getElementById('copyBtn');
+
+			// Utility functions
+			function setLoading(loading) {
+				state.isLoading = loading;
+				shortenBtn.disabled = loading;
+				shortenBtn.textContent = loading ? 'PROCESSING...' : 'SHORT IT!';
+
+				if (loading) {
+					statusArea.innerHTML = '<div class="text-crt-green opacity-70">Processing <span class="animate-pulse">...</span></div>';
+				} else {
+					statusArea.innerHTML = '';
+				}
+			}
+
+			function showError(message) {
+				statusArea.innerHTML = `
+                <div class="text-red-400 text-sm animate-glitch">
+                    <span class="text-crt-pink">ERROR:</span> ${message}
+                </div>
+            `;
+			}
+
+			function showResult(shortUrl) {
+				resultUrl.value = shortUrl;
+				resultArea.classList.remove('hidden');
+				resultUrl.select();
+				state.currentUrl = shortUrl;
+			}
+
+			function hideResult() {
+				resultArea.classList.add('hidden');
+				state.currentUrl = null;
+			}
+
+			// Client-side URL validation
+			function isValidUrl(string) {
+				try {
+					const url = new URL(string);
+					return url.protocol === 'http:' || url.protocol === 'https:';
+				} catch (_) {
+					return false;
+				}
+			}
+
+			// Form submission handler
+			form.addEventListener('submit', async (e) => {
+				e.preventDefault();
+
+				const url = urlInput.value.trim();
+
+				if (!url) {
+					showError('URL is required');
+					return;
+				}
+
+				if (!isValidUrl(url)) {
+					showError('Not a valid target. Use format: https://example.com');
+					return;
+				}
+
+				setLoading(true);
+				hideResult();
+
+				try {
+					const response = await fetch('/api/shorten', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ url }),
 					});
+
+					const data = await response.json();
+
+					if (!response.ok) {
+						showError(data.error || 'Failed to shorten URL');
+						return;
+					}
+
+					showResult(data.short_url);
+				} catch (error) {
+					showError('Network error. Check your connection.');
+				} finally {
+					setLoading(false);
+				}
+			});
+
+			// Copy button handler
+			copyBtn.addEventListener('click', async () => {
+				if (!state.currentUrl) return;
+
+				try {
+					await navigator.clipboard.writeText(state.currentUrl);
+					copyBtn.textContent = 'COPIED!';
+					copyBtn.classList.add('bg-green-500');
+
+					setTimeout(() => {
+						copyBtn.textContent = 'COPY';
+						copyBtn.classList.remove('bg-green-500');
+					}, 2000);
+				} catch (error) {
+					// Fallback for older browsers
+					resultUrl.select();
+					document.execCommand('copy');
+					copyBtn.textContent = 'COPIED!';
+
+					setTimeout(() => {
+						copyBtn.textContent = 'COPY';
+					}, 2000);
+				}
 			});
 		</script>
 	</body>
