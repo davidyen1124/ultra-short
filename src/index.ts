@@ -2,7 +2,8 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { isValid } from 'ulid';
 import type { Env, UrlMapping, UrlMeta } from './types';
-import { generateShortId, validateUrl, normalizeUrl, getClientIP, checkRateLimit } from './utils';
+import { validateUrl, normalizeUrl, getClientIP, checkRateLimit } from './utils';
+import { ulid } from 'ulid';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -14,6 +15,7 @@ app.use(
 		allowHeaders: ['Content-Type'],
 	})
 );
+
 app.onError((err, c) => {
 	console.error('Unhandled error:', err);
 	return c.json({ error: 'Internal Server Error' }, 500);
@@ -62,7 +64,7 @@ app.post('/api/shorten', async (c) => {
 			return c.json({ error: 'Rate limit exceeded', retry_after: 60 }, 429, { 'Retry-After': '60' });
 		}
 
-		const shortId = generateShortId();
+		const shortId = ulid();
 		const mapping: UrlMapping = {
 			dest: normalizedUrl,
 			created: new Date().toISOString(),

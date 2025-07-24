@@ -1,9 +1,3 @@
-import { ulid } from 'ulid';
-
-export function generateShortId(): string {
-	return ulid();
-}
-
 export function validateUrl(url: string): boolean {
 	try {
 		const parsedUrl = new URL(url);
