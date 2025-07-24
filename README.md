@@ -233,69 +233,9 @@ Use responsibly. We are not liable for any life-changing experiences.
 
 ---
 
-## 📄 **LICENSE: THE LINKEDIN VIBES ONLY LICENSE**
+## 📄 **LICENSE**
 
-**ULTRA-SHORT LinkedIn Vibes Only License (ULVO) v1.0**
-
-_Effective immediately because I said so_
-
-**PREAMBLE:**
-In the spirit of authentic professional networking and sustainable innovation, this license embodies the core values of LinkedIn thought leadership while disrupting traditional open-source paradigms.
-
-**TERMS AND CONDITIONS:**
-
-**1. PERMITTED USES:**
-
-- You may use this software if you've posted at least one "I'm humbled to announce..." status
-- Fork/star permitted only after commenting "Congratulations!" on someone's job promotion
-- Commercial use allowed if you've used "synergy" in a sentence unironically
-- Distribution permitted if accompanied by a minimum 500-word LinkedIn article
-
-**2. MANDATORY REQUIREMENTS:**
-
-- All derivative works must include at least 3 buzzwords per function
-- Code comments must be written in "professional networking" tone
-- Any bug fixes must be announced with "I'm excited to share this journey..."
-- Pull requests require a cover letter explaining how this aligns with your personal brand
-
-**3. PROHIBITED ACTIVITIES:**
-
-- Using this code without updating your LinkedIn headline to include "URL Shortening Enthusiast"
-- Forking without first connecting with the author and writing a personalized message
-- Contributing without posting a "lessons learned" article about the experience
-- Using in any context that doesn't involve "disrupting" something
-
-**4. ENDORSEMENT CLAUSE:**
-By using this software, you agree to endorse the author's skills on LinkedIn, particularly:
-
-- "Revolutionary URL Shortening"
-- "Thought Leadership in Link Management"
-- "Disruptive Innovation"
-- "Synergistic Solution Architecture"
-
-**5. THE HUMILITY CLAUSE:**
-Any public discussion of this software must begin with "I'm humbled to share..." and include at least one mention of your "amazing team" (even if you work alone).
-
-**6. NETWORKING REQUIREMENT:**
-Users must attend at least one virtual networking event per quarter and mention this URL shortener in their elevator pitch.
-
-**7. TERMINATION:**
-This license automatically terminates if you:
-
-- Post genuine, helpful content without unnecessary buzzwords
-- Fail to congratulate strangers on their work anniversaries
-- Use "actually" instead of "I'd love to build on that thought..."
-- Admit you don't know something without calling it a "learning opportunity"
-
-**WARRANTY DISCLAIMER:**
-This software is provided "as-is" with the same reliability as LinkedIn's job matching algorithm. The author makes no guarantees except that using this software will definitely enhance your personal brand and probably lead to unsolicited connection requests.
-
-**IN WITNESS WHEREOF,** I have executed this license while maintaining authentic professional relationships and leveraging synergistic growth opportunities.
-
-_David Yen_  
-_Founder & Chief URL Optimization Officer_  
-_LinkedIn Thought Leader in Training_  
-_Disruptor of Long URLs_
+This project is licensed under the LinkedIn Vibes Only License. See the [LICENSE](LICENSE) file for full details.
 
 ---
 
