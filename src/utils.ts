@@ -1,3 +1,5 @@
+import type { RateLimiter } from './rateLimiter';
+
 export function validateUrl(url: string): boolean {
 	try {
 		const parsedUrl = new URL(url);
@@ -27,20 +29,14 @@ export function getClientIP(request: Request): string {
 	return request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() || 'unknown';
 }
 
-export async function checkRateLimit(ip: string, env: KVNamespace): Promise<{ allowed: boolean; remaining: number }> {
-	const key = `user:${ip}:count`;
-	const limit = 60;
-	const window = 60;
-
-	const current = await env.get(key);
-	const count = current ? parseInt(current) : 0;
-
-	if (count >= limit) {
-		return { allowed: false, remaining: 0 };
+export async function checkRateLimit(
+	ip: string,
+	rlNs: DurableObjectNamespace<RateLimiter>
+): Promise<{ allowed: boolean; remaining: number }> {
+	const stub = rlNs.get(rlNs.idFromName(ip));
+	const res = await stub.fetch('https://unused/check');
+	if (!res.ok && res.status !== 429) {
+		throw new Error('Rate limiter failed');
 	}
-
-	const newCount = count + 1;
-	await env.put(key, newCount.toString(), { expirationTtl: window });
-
-	return { allowed: true, remaining: limit - newCount };
+	return res.json();
 }

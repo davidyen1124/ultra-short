@@ -4,6 +4,7 @@ import { isValid } from 'ulid';
 import type { Env, UrlMapping, UrlMeta } from './types';
 import { validateUrl, normalizeUrl, getClientIP, checkRateLimit } from './utils';
 import { ulid } from 'ulid';
+export { RateLimiter } from './rateLimiter';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -35,7 +36,7 @@ app.post('/api/shorten', async (c) => {
 		}
 
 		const clientIP = getClientIP(c.req.raw);
-		const { allowed, remaining } = await checkRateLimit(clientIP, c.env.LINKS);
+		const { allowed, remaining } = await checkRateLimit(clientIP, c.env.RATE_LIMITER);
 
 		if (!allowed) {
 			return c.json({ error: 'Rate limit exceeded', retry_after: 60 }, 429, { 'Retry-After': '60' });

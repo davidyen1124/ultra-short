@@ -19,7 +19,18 @@
 			"binding": "LINKS",
 			"id": "8f672e258af54888a3d7af32ab01afd4"
 		}
-	]
+	],
+	"durable_objects": {
+		"bindings": [
+			{ "name": "RATE_LIMITER", "class_name": "RateLimiter" }
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["RateLimiter"]
+		}
+	],
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -37,7 +48,11 @@
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	// "vars": { "MY_VARIABLE": "production_value" },
+	"vars": {
+		"RATE_CAPACITY": "60",
+		"RATE_WINDOW_SEC": "60", 
+		"IDLE_TTL_MIN": "10"
+	},
 	/**
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
