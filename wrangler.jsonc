@@ -22,13 +22,14 @@
 	],
 	"durable_objects": {
 		"bindings": [
-			{ "name": "RATE_LIMITER", "class_name": "RateLimiter" }
+			{ "name": "RATE_LIMITER", "class_name": "RateLimiter" },
+			{ "name": "LINK_STATS", "class_name": "LinkStats" }
 		]
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["RateLimiter"]
+			"new_sqlite_classes": ["RateLimiter", "LinkStats"]
 		}
 	],
 	/**

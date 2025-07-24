@@ -5,6 +5,7 @@ import type { Env, UrlMapping, UrlMeta } from './types';
 import { validateUrl, normalizeUrl, getClientIP, checkRateLimit } from './utils';
 import { ulid } from 'ulid';
 export { RateLimiter } from './rateLimiter';
+export { LinkStats } from './linkStats';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -88,22 +89,11 @@ app.notFound((c) => {
 
 async function updateClickCount(code: string, env: Env): Promise<void> {
 	try {
-		const metaKey = `meta:${code}`;
-		const existingMeta = await env.LINKS.get(metaKey);
-
-		let meta: UrlMeta;
-		if (existingMeta) {
-			meta = JSON.parse(existingMeta);
-			meta.clicks += 1;
-			meta.last = new Date().toISOString();
-		} else {
-			meta = {
-				clicks: 1,
-				last: new Date().toISOString(),
-			};
-		}
-
-		await env.LINKS.put(metaKey, JSON.stringify(meta));
+		const stub = env.LINK_STATS.get(env.LINK_STATS.idFromName(code));
+		await stub.fetch('https://unused/increment', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+		});
 	} catch (error) {
 		console.error('Failed to update click count:', {
 			code,
