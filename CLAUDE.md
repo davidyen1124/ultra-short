@@ -31,11 +31,13 @@ This is a Cloudflare Workers-based URL shortener service built with the Hono fra
   - Global error handling with structured responses
 
 - **`src/rateLimiter.ts`**: RateLimiter Durable Object class implementing:
+
   - Token bucket algorithm for rate limiting with configurable capacity and refill rate
   - Automatic idle cleanup with TTL-based storage deletion
   - Persistent state management across requests
 
 - **`src/linkStats.ts`**: LinkStats Durable Object class for analytics:
+
   - Click counting and timestamp tracking per short URL
   - Persistent storage of click statistics
   - Fire-and-forget analytics updates
@@ -54,9 +56,11 @@ This is a Cloudflare Workers-based URL shortener service built with the Hono fra
 ### Data Model
 
 **KV Storage:**
+
 - `id:<CODE>`: URL mapping `{ dest: string, created: string }`
 
 **Durable Objects:**
+
 - **RateLimiter**: Token bucket state `{ tokens: number, last: number }` with automatic idle cleanup
 - **LinkStats**: Click analytics `{ clicks: number, last: string }` per short URL code
 
