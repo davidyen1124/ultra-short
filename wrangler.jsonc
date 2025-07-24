@@ -7,15 +7,19 @@
 	"name": "url-shortener",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-07-24",
-	"compatibility_flags": [
-		"global_fetch_strictly_public"
-	],
+	"compatibility_flags": ["global_fetch_strictly_public"],
 	"assets": {
 		"directory": "./public"
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"kv_namespaces": [
+		{
+			"binding": "LINKS",
+			"id": "8f672e258af54888a3d7af32ab01afd4"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
